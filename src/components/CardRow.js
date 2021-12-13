@@ -2,20 +2,20 @@ import React from 'react';
 import '../App.css';
 
 
-const CardRow = (props) => {
-
+const CardRow = ({state, dispatch}) => {
 
   const removeCard = (event) => {
-      const index = event.target.dataset.index;
-    
-      const temp = [...props.listOfCards];
-      temp.splice(index, 1);
-      props.setListOfCards([...temp]);
+      dispatch({
+          type:'remove-card',
+          index:event.target.dataset.index,
+      })
   }
   
   const editCard = (event) =>{
-      props.setCardToEdit(event.target.dataset.index);
-      props.changeToEdit(false);
+      dispatch({
+          type:'to-edit-card',
+          index:event.target.dataset.index,
+      }) 
   }
 
 
@@ -23,7 +23,7 @@ const CardRow = (props) => {
 
   return( 
        <>
-    {props.listOfCards.map((card, index)=>(
+    {state.listOfCards.map((card, index)=>(
         <tr key={index}>
             <td>{index+1}</td>
             <td>{card.front}</td>

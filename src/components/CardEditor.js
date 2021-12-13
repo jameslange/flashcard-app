@@ -19,12 +19,13 @@ const editorStyle={
   
 }
 
-const CardEditor = (props) => {
-const [cardFront, setCardFront ] = useState("");
-const [cardBack, setCardBack ] = useState("");
+const CardEditor = ({state, dispatch}) => {
 
-const [cardToEdit, setCardToEdit] = useState("");
-const [newCard, changeToEdit] = useState(true);
+// const [cardFront, setCardFront ] = useState("");
+// const [cardBack, setCardBack ] = useState("");
+
+// const [cardToEdit, setCardToEdit] = useState("");
+// const [newCard, changeToEdit] = useState(true);
 
 
 
@@ -36,44 +37,32 @@ const mainStyle={
   
 }
 
-
+// const newCard = state.newCard;
 
   return(   
     <main style={mainStyle}  >
         <section  className="editorStyle" style={editorStyle} >
             <h1>Card Editor</h1>
             
-            {props.listOfCards.length===0 ?
+             {state.listOfCards.length===0 ?
             
-            <></>:
+            <></>: 
 
             <CardTable 
-             listOfCards={props.listOfCards}
-             setListOfCards={props.setListOfCards}
-             setCardToEdit={setCardToEdit}
-             changeToEdit={changeToEdit}
+            state={state}
+            dispatch={dispatch}
              />
-          }
+             }
             
-           {newCard ? 
+           {state.newCard ? 
             <NewCard 
-            cardFront={cardFront} 
-            cardBack={cardBack}
-            listOfCards={props.listOfCards}
-            setListOfCards={props.setListOfCards}
-            setCardFront={setCardFront}
-            setCardBack={setCardBack}
+            state={state}
+            dispatch={dispatch}
            
             />:
              <EditCard 
-             cardFront={cardFront}
-             cardBack={cardBack} 
-             setCardFront={setCardFront}
-             setCardBack={setCardBack} 
-             cardToEdit={cardToEdit}
-             listOfCards={props.listOfCards}
-             setListOfCards={props.setListOfCards}
-             changeToAdd={changeToEdit}
+             state={state}
+             dispatch={dispatch}
                />
            }
         </section>

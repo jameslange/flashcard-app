@@ -1,28 +1,19 @@
 import React from 'react';
 import '../App.css';
 
-const EditCard = (props) => {
+const EditCard = ({state, dispatch}) => {
      
     const editCard = () => {
-        const card = props.listOfCards[props.cardToEdit];
-        const temp = [...props.listOfCards];
-       
-
-        card.front = props.cardFront;
-        card.back = props.cardBack;
-       
-        temp[props.cardToEdit]=card;
-        props.setListOfCards([...temp]);
-        props.changeToAdd(true);
-        props.setCardFront('');
-        props.setCardBack(''); 
+     dispatch({
+         type:'edit-card',
+     })
 
     }
    
    return( <div className="inputDiv">
         <div>
-            <input value={props.cardFront} onChange={(e)=>props.setCardFront(e.target.value)} placeholder='Edit Front of Card'></input>
-            <input value={props.cardBack} onChange={(e)=>props.setCardBack(e.target.value)} placeholder='Edit Back of Card'></input>
+            <input value={state.cardFront} onChange={(e)=>dispatch({type:'update-front', value:e.target.value})} placeholder='Edit Front of Card'></input>
+            <input value={state.cardBack} onChange={(e)=>dispatch({type:'update-back', value:e.target.value})} placeholder='Edit Back of Card'></input>
         </div>
         <div className='buttonDiv'>
             <button onClick={editCard}>Edit Card</button>
@@ -32,4 +23,4 @@ const EditCard = (props) => {
 }
 
 
-export default EditCard
+export default EditCard;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import CardEditor from './components/CardEditor';
 import CardViewer from './components/CardViewer';
 
@@ -6,38 +6,43 @@ import './App.css';
 import {HashRouter, Routes, Route} from 'react-router-dom';
 import Home from './components/Home';
 
-function App() {
-  const[listOfCards, setListOfCards] = useState([]);
+import {
+  initialState,
+  reducer
+} from './components/Reducer';
 
-  const initialState={
-    cardFront:0,
-    cardBack:0,
-    listOfCards:[],
-  }
+
+function App() {
+  // const[listOfCards, setListOfCards] = useState([]);
+
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+
+
+ const listOfCards= state.listOfCards;
 
 
   useEffect(()=>{
-    if((localStorage.getItem('listOfCards')!== null)&&(localStorage.getItem('listOfCards')!== "")){
-      setListOfCards(JSON.parse(localStorage.getItem('listOfCards')));
-    }
-  }, []);
+   dispatch({
+     type:'card-storage'
+   })
+}, []);
 
   useEffect(() =>{
-    if(listOfCards.length>0){
+    
     localStorage.setItem('listOfCards',JSON.stringify(listOfCards));
-    }
-  },[listOfCards])
-
- 
+    
+},[listOfCards])
  
   return (
     <>
   
      <HashRouter>
      <Routes>
-    <Route path="/" element={<Home />} />
-        <Route index element={<CardEditor listOfCards={listOfCards} setListOfCards={setListOfCards}/>}/>
-        <Route path="cardviewer" element={<CardViewer setListOfCards={setListOfCards}listOfCards={listOfCards} />} />
+     <Route path="/" element={<CardEditor state={state} dispatch={dispatch}/>}/>
+    {/* <Route path="/" element={<Home />} /> */}
+        
+        <Route path="cardviewer" element={<CardViewer listOfCards={listOfCards} dispatch={dispatch} />} />
     </Routes >
 </HashRouter>
 </>

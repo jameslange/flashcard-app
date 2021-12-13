@@ -1,11 +1,11 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import CardRow from './CardRow';
 import '../App.css';
 
 const tableStyle ={
     marginBottom:'2rem',
 }
-const CardTable = (props) => (
+const CardTable = ({state, dispatch}) => (
 
     <table style={tableStyle}>
         <thead>
@@ -18,24 +18,10 @@ const CardTable = (props) => (
             </tr>
         </thead>
         <tbody>
-        {/* {  
-        useEffect(()=>{
-           if(props.listOfCards.length>0){
-            <CardRow
-             listOfCards={props.listOfCards}
-             setListOfCards={props.setListOfCards}
-             setCardToEdit={props.setCardToEdit}
-             changeToEdit={props.changeToEdit}
-             />
-           }
-        },[])} */}
-       
-
+      
         <CardRow 
-        listOfCards={props.listOfCards}
-        setListOfCards={props.setListOfCards}
-        setCardToEdit={props.setCardToEdit}
-        changeToEdit={props.changeToEdit}
+        state={state}
+        dispatch={dispatch}
         />
         </tbody>
     </table>

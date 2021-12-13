@@ -29,7 +29,7 @@ const buttonStyle= {
     marginBottom:'1rem'
 }
 
-const CurrentCard = (props) => {
+const CurrentCard = ({listOfCards, dispatch}) => {
     const [currentSide, setSide] =  useState(true);
     const [cardNumber, setCardNumber] = useState(0);
     
@@ -38,19 +38,19 @@ const CurrentCard = (props) => {
     const displayCurrentCard= () =>{
         let currentList;
          if(cardNumber < 0) setCardNumber(0);
-         if(props.listOfCards.length>0 && cardNumber>=props.listOfCards.length) setCardNumber(props.listOfCards.length-1);
-        if(props.listOfCards.length>0 && (cardNumber>= 0 && cardNumber<props.listOfCards.length)){
+         if(listOfCards.length>0 && cardNumber>=listOfCards.length) setCardNumber(listOfCards.length-1);
+        if(listOfCards.length>0 && (cardNumber>= 0 && cardNumber<listOfCards.length)){
             currentList = 
-                currentSide ? props.listOfCards[cardNumber].front:
-                props.listOfCards[cardNumber].back;
+                currentSide ? listOfCards[cardNumber].front:
+                listOfCards[cardNumber].back;
                 return currentList
          }
     }
     
 
      const nextCard = () =>{
-         if(cardNumber <= props.listOfCards.length) setCardNumber(cardNumber+1);
-         if(cardNumber+1 === props.listOfCards.length) setCardNumber(0);
+         if(cardNumber <= listOfCards.length) setCardNumber(cardNumber+1);
+         if(cardNumber+1 === listOfCards.length) setCardNumber(0);
          if(!currentSide) setSide(true);
      }
      const prevCard = () => {
@@ -62,19 +62,12 @@ const CurrentCard = (props) => {
         setSide(!currentSide);
     }
     const shuffleCards = () =>{
-        const temp = [...props.listOfCards];
-        for (let i = temp.length -1; i > 0; i--) {
-            let j = Math.floor(Math.random() * i);
-            let k = temp[i];
-            temp[i] = temp[j];
-            temp[j] = k;
-          }
-        props.setListOfCards(temp);
+       dispatch({type:'shuffle-cards'});
     }
     
     return(
     <div style={parentStyle}>
-        <p>Card {cardNumber+1}/{props.listOfCards.length}</p>
+        <p>Card {cardNumber+1}/{listOfCards.length}</p>
         <div onClick={flipCard} style={cardStyle}>
             <p>{displayCurrentCard()}</p>
         </div>

@@ -6,7 +6,7 @@ import '../App.css'
 
 
 
-const CardViewer = (props) => {
+const CardViewer = ({listOfCards, dispatch}) => {
 
     const mainStyle={
         display: 'flex',
@@ -17,7 +17,7 @@ const CardViewer = (props) => {
 
   return( <section style={mainStyle} >
         <h1>Card Viewer</h1>
-        <CurrentCard setListOfCards={props.setListOfCards} listOfCards={props.listOfCards}/>
+        <CurrentCard listOfCards={listOfCards} dispatch={dispatch}/>
        
         <Link to='/'> <button style={{marginLeft:'1.5rem'}} >Go to editor</button></Link> 
         
